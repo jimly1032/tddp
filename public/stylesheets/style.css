@@ -1,0 +1,16 @@
+body {
+  padding: 10px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+#line{
+	border:4px solid;
+	position:absolute ;
+}
+#can{
+	border:4px solid;
+	position: absolute;
+}
