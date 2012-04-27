@@ -53,8 +53,8 @@ io.configure(function(){
 		accept(null,true);
 	});
 });
-routes.chat(io);
 // Routes
+routes.chat(io);
 
 app.get('/login',routes.login);
 app.get('/',function(req,res){

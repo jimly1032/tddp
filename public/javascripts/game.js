@@ -4,7 +4,11 @@ var images;
 var arr;
 var finished;
 var game = {
-	init: function(){
+	socket:{},
+	uid:'',
+	init: function(socket,uid){
+		this.socket = socket;
+		this.uid = uid;
 		canvas = document.getElementById('can');
 		ctx = canvas.getContext('2d');
 		images = {};
@@ -142,7 +146,7 @@ var game = {
 				clearInterval(timeID);
 				canvas.addEventListener('click',handle);
 			}
-		},60);
+		},50);
 	},
 	addListener:function(){
 		var that = this;
@@ -239,6 +243,9 @@ var game = {
 				}
 			}
 		}
+		if(stack.length>0){
+			this.socket.emit('say',this.uid,{msg:$('#lab').text()+':哈哈，我得到了:'+stack.length});
+		}
 		console.log(stack);
 		return stack;
 	},
@@ -272,7 +279,7 @@ var game = {
 						clearInterval(timeID);
 						count = 0;
 					}
-				},50);
+				},30);
 			}(temp);
 		}
 		setTimeout(function(){
@@ -280,7 +287,7 @@ var game = {
 			if(stack){
 				that.slidedown(stack);
 			}
-		},1000);
+		},600);
 	}
 };
 //$(function(){
