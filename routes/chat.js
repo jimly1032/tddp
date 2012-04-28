@@ -2,9 +2,10 @@ var allUsers = {};
 var freeUsers = [];
 exports.chat = function(io){
 	io.sockets.on('connection',function(socket){
-		console.log('new people join:'+(socket.handshake.sessionID));
 		var session = socket.handshake.session;
-		console.log(session);
+		/*
+		 *当前在线人数
+		 */
 		var refresh_online = function(){
 			var temp = [];
 			for(var i in allUsers){
@@ -21,6 +22,27 @@ exports.chat = function(io){
 				socket.join(room);
 			});
 		}
+		/*
+		 * 邀请模式
+		 */
+		socket.on('invate',function(from,data){
+			if(data === undefined){
+				data = from;
+				socket.join(data);
+			}else{
+				if(io.rooms['/'+data] !== undefined){
+					socket.join(data);
+					if(io.rooms['/'+data].length === 2){
+						var msg = 'game start';
+						io.sockets.in(data).emit('game',data,msg);
+					}
+				}else
+					console.log('当前房间不存在');
+			}
+		});
+		/*
+		 *随机模式
+		 */
 		socket.on('random',function(data){
 			if(freeUsers.length>=1){
 				var to = freeUsers.pop();
@@ -45,7 +67,6 @@ exports.chat = function(io){
 		});
 		socket.on('say',function(from,data){
 			io.sockets.in(from).emit('say',from,{msg:data.msg});
-//			socket.emit('say',{msg:data.msg});
 		});
 	});
 };

@@ -60,6 +60,13 @@ app.get('/login',routes.login);
 app.get('/',function(req,res){
 	routes.index(req,res);
 });
+app.get('/:uid',function(req,res){
+	var room = req.params.uid;
+	if(room === 'favicon.ico')
+		return;
+	console.log(req.params.uid);
+	routes.invite(req,res,room);
+});
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

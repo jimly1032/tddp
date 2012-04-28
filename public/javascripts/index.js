@@ -6,6 +6,12 @@ $(document).ready(function(){
 		console.log('error:',err);
 	});
 	socket.on('connect',function(){
+		if(room === undefined){
+			room = location.pathname.substr(1);
+			if(room !== ''){
+				socket.emit('invate',room,room );
+			}
+		}
 		socket.emit('connect','connecting');
 		console.log('you hava connected');
 	});
@@ -15,11 +21,15 @@ $(document).ready(function(){
 	});
 	socket.on('disconnect',function(){
 		console.log('you hava disconnected');
-		$('#text').val('与服务器断开连接');
+		messages += '与服务器断开连接\n';
+		$('#text').val(messages);
 	});
 	$('#say').click(function(){
 		if($('#msg').val()  === 'random'){
 			socket.emit('random','随机模式');
+		}
+		if($('#msg').val()  === 'invate'){
+			socket.emit('invate',$('#lab').text());
 		}
 		socket.emit('say',room,{msg:$('#lab').text()+':'+$('#msg').val()});
 	});
