@@ -6,7 +6,7 @@ exports.login=function(req,res){
 		client_secret:'31075b7a8e87ff11d5ab1393623db2db',
 		redirect_uri:'http://127.0.0.1:3000/login',
 		response_type:'',
-		display:'',
+		display:'popup',
 		room:''
 	};
 	if(room !== undefined)
