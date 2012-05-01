@@ -1,7 +1,8 @@
 $(document).ready(function(){
 	var messages = '';
 	var room ;
-	var socket = io.connect('http://tddps.cloudfoundry.com');
+//	var socket = io.connect('http://tddps.cloudfoundry.com');
+	var socket = io.connect('http://127.0.0.1:3000');
 	socket.on('error',function(err){
 		console.log('error:',err);
 	});

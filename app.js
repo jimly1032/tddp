@@ -77,5 +77,6 @@ app.get('/:uid',function(req,res){
 	routes.invite(req,res,room);
 });
 
-app.listen(process.env.VCAP_APP_PORT|| 3000);
+//app.listen(process.env.VCAP_APP_PORT|| 3000);
+app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
