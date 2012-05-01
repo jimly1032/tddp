@@ -32,6 +32,15 @@ app.configure('production', function(){
 
 
 io.configure(function(){
+	if(process.env.VMC_APP_PORT) {
+		io.set('transports', [
+		//	'websocket',
+			'flashsocket',
+			'htmlfile',
+			'xhr-polling',
+			'jsonp-polling'
+			]);
+	}
 	var parseCookie = require('connect').utils.parseCookie;
 	var Session = require('connect').middleware.session.Session;
 	io.set('authorization',function(data,accept){
@@ -68,5 +77,5 @@ app.get('/:uid',function(req,res){
 	routes.invite(req,res,room);
 });
 
-app.listen(3000);
+app.listen(process.env.VCAP_APP_PORT|| 3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
