@@ -139,10 +139,24 @@ var game = {
 		images.src = "../images/game.png";
 		this.getArray();
 		images.onload = function(){
-			for(var i = 0;i<8;i++){
-				for(var j=0;j<8;j++){
-					that.switchimg(images,50+50*i,150+50*j,arr[i][j]);
-				}
+			for(var j=0;j<8;j++){
+				var callback = function(j){
+					var count = 0;
+					var id = setInterval(function(){
+						if(count === 50){
+							clearInterval(id);
+							count = 0;
+						}else{
+							for(var i = 0;i<8;i++){
+								ctx.clearRect(150+50*j,50*i+count,50,50);
+							}
+							count += 10;
+							for(var i = 0;i<8;i++){
+								that.switchimg(images,count+50*i,150+50*j,arr[i][j]);
+							}
+						}
+					},50);
+				}(j);
 			}
 		};
 		var stack = new Array();
@@ -297,6 +311,80 @@ var game = {
 			this.socket.emit('say',this.uid,{msg:$('#lab').text()+':哈哈，我得到了:'+score+'分'});
 		}
 		return stack;
+	},
+	/*
+	 *判断游戏中是否还有可以消去的，如果没有，开始新的
+	 *
+	 */
+	isOver:function(){
+		var i = 0,j = 0;
+		var temp = [];
+		for(i = 0;i < 8; i++){
+			for(j = 0 ;j < 7; j++){
+				if( arr[i][j+1] !== undefined && arr[i][j] === arr[i][j+1]){
+					if(arr[i-1] !== undefined && arr[i-1][j+2] !== undefined && arr[i][j] === arr[i-1][j+2]){
+						temp.push({'x':i-1,'y':j+2});
+					}
+					if(arr[i+1] !== undefined && arr[i+1][j+2] !== undefined &&  arr[i][j] === arr[i+1][j+2]){
+						temp.push({'x':i+1,'y':j+2});
+					}
+					if(arr[i+1] !== undefined && arr[i+1][j-1] !== undefined && arr[i][j] === arr[i+1][j-1]){
+						temp.push({'x':i+1,'y':j-1});
+					}
+					if(arr[i-1] !== undefined && arr[i-1][j-1] !== undefined  && arr[i][j] === arr[i-1][j-1]){
+						temp.push({'x':i-1,'y':j-1});
+					}
+					if(arr[i][j-2] !== undefined && arr[i][j] === arr[i][j-2]){
+						temp.push({'x':i,'y':j-2});
+					}
+					if(arr[i][j+3] !== undefined && arr[i][j] === arr[i][j+3]){
+						temp.push({'x':i,'y':j+3});
+					}
+				}
+				if(arr[i][j+2] !== undefined && arr[i][j] === arr[i][j+2]){
+					if(arr[i-1] !== undefined && arr[i-1][j+1] !== undefined && arr[i][j] == arr[i-1][j+1]){
+						temp.push({'x':i-1,'y':j+1});
+					}
+					if(arr[i+1] !== undefined && arr[i+1][j+1] !== undefined && arr[i][j] == arr[i+1][j+1]){
+						temp.push({'x':i+1,'y':j+1});
+					}
+				}
+				if(arr[i+2] !== undefined && arr[i+2][j] !== undefined && arr[i][j] === arr[i+2][j]){
+					if(arr[i+1] !== undefined && arr[i+1][j-1] !== undefined && arr[i][j] == arr[i+1][j-1]){
+						temp.push({'x':i+1,'y':j-1});
+					}
+					if(arr[i+1] !== undefined && arr[i+1][j+1] !== undefined && arr[i][j] == arr[i+1][j+1]){
+						temp.push({'x':i+1,'y':j+1});
+					}
+				}
+				if(arr[i+1] !== undefined && arr[i][j] === arr[i+1][j]){
+					if(arr[i-1] !== undefined && arr[i-1][j-1] !== undefined && arr[i][j] === arr[i-1][j-1]){
+						temp.push({'x':i-1,'y':j-1});
+					}
+					if(arr[i-1] !== undefined && arr[i-1][j+1] !== undefined && arr[i][j] === arr[i-1][j+1]){
+						temp.push({'x':i-1,'y':j+1});
+					}
+					if(arr[i+2] !== undefined && arr[i+2][j-1] !== undefined && arr[i][j] === arr[i+2][j-1]){
+						temp.push({'x':i+2,'y':j-1});
+					}
+					if(arr[i+2] !== undefined && arr[i+2][j+1] !== undefined && arr[i][j] === arr[i+2][j+1]){
+						temp.push({'x':i+2,'y':j+1});
+					}
+					if(arr[i-2] !== undefined && arr[i-2][j] !== undefined && arr[i][j] === arr[i-2][j]){
+						temp.push({'x':i-2,'y':j});
+					}
+					if(arr[i+3] !== undefined && arr[i+3][j] !== undefined && arr[i][j] === arr[i+3][j]){
+						temp.push({'x':i+3,'y':j});
+					}
+				}
+			}
+		}
+		if(temp.length === 0 ){
+			ctx.clearRect(0,0,800,800);
+			this.drawImg();
+		}
+		for(i = 0;i<temp.length;i++)
+			console.log('is over:'+temp[i].x+" "+temp[i].y);
 	},
 	slidedown:function(handle,stack){
 		var that = this;
