@@ -25,8 +25,8 @@ var sprite = {
 		var x = 0;
 		var y = 990;
 		var count = 1;
-		timeId = setInterval(function(){
-			ctx.clearRect(i,j,50,50);
+		this.timeId = setInterval(function(){
+			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,68,73,i,j,50,50);
 			if(count === 4){
 				x = 0;
@@ -42,14 +42,14 @@ var sprite = {
 		},30);
 	},
 	clearTimer:function(){
-		clearInterval(timeId);
+		clearInterval(this.timeId);
 	},
 	orangesprite:function(image,i,j){
 		var x = 730;
 		var y = 700;
 		var count = 1;
-		timeId = setInterval(function(){
-			ctx.clearRect(i,j,50,50);
+		this.timeId = setInterval(function(){
+			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,73,66,i,j,50,50);
 			if(count === 3){
 				x = 730;
@@ -68,8 +68,8 @@ var sprite = {
 		var x = 340;
 		var y = 990;
 		var count = 1;
-		timeId = setInterval(function(){
-			ctx.clearRect(i,j,50,50);
+		this.timeId = setInterval(function(){
+			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,67,72.5,i,j,50,50);
 			if(count === 4){
 				x = 340;
@@ -88,8 +88,8 @@ var sprite = {
 		var x = 680;
 		var y = 1030;
 		var count = 1;
-		timeId = setInterval(function(){
-			ctx.clearRect(i,j,50,50);
+		this.timeId = setInterval(function(){
+			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,67,68,i,j,50,50);
 			if(count === 3){
 				x = 680;
@@ -108,8 +108,8 @@ var sprite = {
 		var x = 0;
 		var y = 1280;
 		var count = 1;
-		timeId = setInterval(function(){
-			ctx.clearRect(i,j,50,50);
+		this.timeId = setInterval(function(){
+			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,68,64,i,j,50,50);
 			if(count === 3){
 				x = 0;
@@ -128,8 +128,8 @@ var sprite = {
 		var x = 340;
 		var y = 1280;
 		var count = 1;
-		timeId = setInterval(function(){
-			ctx.clearRect(i,j,50,50);
+		this.timeId = setInterval(function(){
+			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,65,68,i,j,50,50);
 			if(count === 4){
 				x = 340;
@@ -148,8 +148,8 @@ var sprite = {
 		var x = 662;
 		var y = 1375;
 		var count = 1;
-		timeId = setInterval(function(){
-			ctx.clearRect(i,j,50,50);
+		this.timeId = setInterval(function(){
+			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,65,64,i,j,50,50);
 			if(count === 4){
 				x = 662;
@@ -163,5 +163,65 @@ var sprite = {
 				count += 1;
 			}
 		},30);
-	}
+	},
+	/*
+	 *图片精灵
+	 */
+	switchsprite:function(images,i,j,res){
+		switch(res){
+			case 0:
+				sprite.redsprite(images,j,i);
+				break;
+			case 1:
+				sprite.greensprite(images,j,i);
+				break;
+			case 2:
+				sprite.bluesprite(images,j,i);
+				break;
+			case 3:
+				sprite.purplesprite(images,j,i);
+				break;
+			case 4:
+				sprite.yellowsprite(images,j,i);
+				break;
+			case 5:
+				sprite.whitesprite(images,j,i);
+				break;
+			case 6:
+				sprite.orangesprite(images,j,i);
+				break;
+			default:
+				break;
+		}
+	},
+	/*
+	 *静态图片
+	 */
+	switchimg:function(images,i,j,res){
+		switch(res){
+			case 0:
+				sprite.red(images,j,i);
+				break;
+			case 1:
+				sprite.green(images,j,i);
+				break;
+			case 2:
+				sprite.blue(images,j,i);
+				break;
+			case 3:
+				sprite.purple(images,j,i);
+				break;
+			case 4:
+				sprite.yellow(images,j,i);
+				break;
+			case 5:
+				sprite.white(images,j,i);
+				break;
+			case 6:
+				sprite.orange(images,j,i);
+				break;
+			default:
+				break;
+		}
+	},
 };
