@@ -1,31 +1,38 @@
-var sprite = {
-	timeId:null	,
-	purple:function(image,i,j){
+(function(){
+	var image = {};
+	var timeId = 0;
+	var ctx = null;
+	/*
+	 *剪切图片，在指定位置将图片画上去
+	 *i 横坐标
+	 *j 纵坐标
+	 */
+	var purple=function(i,j){
 		ctx.drawImage(image,334,1607,70,70,i,j,50,50);
-	},
-	red:function(image,i,j){
+	};
+	var red=function(i,j){
 		ctx.drawImage(image,7,1607,70,70,i,j,50,50);
-	},
-	white:function(image,i,j){
+	};
+	var white=function(i,j){
 		ctx.drawImage(image,89,1607,70,70,i,j,50,50);
-	},
-	green:function(image,i,j){
+	};
+	var green=function(i,j){
 		ctx.drawImage(image,170,1607,70,70,i,j,50,50);
-	},
-	yellow:function(image,i,j){
+	};
+	var yellow=function(i,j){
 		ctx.drawImage(image,252,1607,70,70,i,j,50,50);
-	},
-	orange:function(image,i,j){
+	};
+	var orange=function(i,j){
 		ctx.drawImage(image,417,1607,70,70,i,j,50,50);
-	},
-	blue:function(image,i,j){
+	};
+	var blue=function(i,j){
 		ctx.drawImage(image,497,1602,70,74,i,j,50,50);
-	},
-	purplesprite:function(image,i,j){
+	};
+	var purplesprite=function(i,j){
 		var x = 0;
 		var y = 990;
 		var count = 1;
-		this.timeId = setInterval(function(){
+		timeId = setInterval(function(){
 			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,68,73,i,j,50,50);
 			if(count === 4){
@@ -40,15 +47,12 @@ var sprite = {
 				count += 1;
 			}
 		},30);
-	},
-	clearTimer:function(){
-		clearInterval(this.timeId);
-	},
-	orangesprite:function(image,i,j){
+	};
+	var orangesprite=function(i,j){
 		var x = 730;
 		var y = 700;
 		var count = 1;
-		this.timeId = setInterval(function(){
+		timeId = setInterval(function(){
 			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,73,66,i,j,50,50);
 			if(count === 3){
@@ -63,12 +67,12 @@ var sprite = {
 				count += 1;
 			}
 		},30);
-	},
-	bluesprite:function(image,i,j){
+	};
+	var bluesprite=function(i,j){
 		var x = 340;
 		var y = 990;
 		var count = 1;
-		this.timeId = setInterval(function(){
+		timeId = setInterval(function(){
 			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,67,72.5,i,j,50,50);
 			if(count === 4){
@@ -83,12 +87,12 @@ var sprite = {
 				count += 1;
 			}
 		},30);
-	},
-	yellowsprite:function(image,i,j){
+	};
+	var yellowsprite=function(i,j){
 		var x = 680;
 		var y = 1030;
 		var count = 1;
-		this.timeId = setInterval(function(){
+		timeId = setInterval(function(){
 			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,67,68,i,j,50,50);
 			if(count === 3){
@@ -103,12 +107,12 @@ var sprite = {
 				count += 1;
 			}
 		},30);
-	},
-	greensprite:function(image,i,j){
+	};
+	var greensprite=function(i,j){
 		var x = 0;
 		var y = 1280;
 		var count = 1;
-		this.timeId = setInterval(function(){
+		timeId = setInterval(function(){
 			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,68,64,i,j,50,50);
 			if(count === 3){
@@ -123,12 +127,12 @@ var sprite = {
 				count += 1;
 			}
 		},30);
-	},
-	redsprite:function(image,i,j){
+	};
+	var redsprite=function(i,j){
 		var x = 340;
 		var y = 1280;
 		var count = 1;
-		this.timeId = setInterval(function(){
+		timeId = setInterval(function(){
 			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,65,68,i,j,50,50);
 			if(count === 4){
@@ -143,12 +147,12 @@ var sprite = {
 				count += 1;
 			}
 		},30);
-	},
-	whitesprite:function(image,i,j){
+	};
+	var whitesprite=function(i,j){
 		var x = 662;
 		var y = 1375;
 		var count = 1;
-		this.timeId = setInterval(function(){
+		timeId = setInterval(function(){
 			ctx.clearRect(i,j,60,60);
 			ctx.drawImage(image,x,y,65,64,i,j,50,50);
 			if(count === 4){
@@ -163,65 +167,79 @@ var sprite = {
 				count += 1;
 			}
 		},30);
-	},
-	/*
-	 *图片精灵
-	 */
-	switchsprite:function(images,i,j,res){
-		switch(res){
-			case 0:
-				sprite.redsprite(images,j,i);
-				break;
-			case 1:
-				sprite.greensprite(images,j,i);
-				break;
-			case 2:
-				sprite.bluesprite(images,j,i);
-				break;
-			case 3:
-				sprite.purplesprite(images,j,i);
-				break;
-			case 4:
-				sprite.yellowsprite(images,j,i);
-				break;
-			case 5:
-				sprite.whitesprite(images,j,i);
-				break;
-			case 6:
-				sprite.orangesprite(images,j,i);
-				break;
-			default:
-				break;
-		}
-	},
-	/*
-	 *静态图片
-	 */
-	switchimg:function(images,i,j,res){
-		switch(res){
-			case 0:
-				sprite.red(images,j,i);
-				break;
-			case 1:
-				sprite.green(images,j,i);
-				break;
-			case 2:
-				sprite.blue(images,j,i);
-				break;
-			case 3:
-				sprite.purple(images,j,i);
-				break;
-			case 4:
-				sprite.yellow(images,j,i);
-				break;
-			case 5:
-				sprite.white(images,j,i);
-				break;
-			case 6:
-				sprite.orange(images,j,i);
-				break;
-			default:
-				break;
-		}
-	},
-};
+	};
+	var sprite = {
+		timeId:null	,
+		init:function(img,c){
+			image = img;
+			ctx = c;
+		},
+		/*
+		 *清除定时器
+		 */
+		clearTimer:function(){
+			clearInterval(timeId);
+		},
+		/*
+		 *图片精灵
+		 */
+		switchsprite:function(i,j,r){
+			switch(r){
+				case 0:
+					redsprite(j,i);
+					break;
+				case 1:
+					greensprite(j,i);
+					break;
+				case 2:
+					bluesprite(j,i);
+					break;
+				case 3:
+					purplesprite(j,i);
+					break;
+				case 4:
+					yellowsprite(j,i);
+					break;
+				case 5:
+					whitesprite(j,i);
+					break;
+				case 6:
+					orangesprite(j,i);
+					break;
+				default:
+					break;
+			}
+		},
+		/*
+		 *静态图片
+		 */
+		switchimg:function(i,j,res){
+			switch(res){
+				case 0:
+					red(j,i);
+					break;
+				case 1:
+					green(j,i);
+					break;
+				case 2:
+					blue(j,i);
+					break;
+				case 3:
+					purple(j,i);
+					break;
+				case 4:
+					yellow(j,i);
+					break;
+				case 5:
+					white(j,i);
+					break;
+				case 6:
+					orange(j,i);
+					break;
+				default:
+					break;
+			}
+		},
+	};
+	window.sprite = sprite;
+})();
