@@ -7,8 +7,8 @@
 		 */
 		init:function(c){
 			ctx = c;
-			this.startgame();
 		},
+		loadingTimeId:null,
 		/*
 		 * 用于两个图片交换的滑动动画
 		 *@parma selected第一次点击的坐标
@@ -117,6 +117,35 @@
 				}
 			},40);
 			timecount.push(timeID);
+		},
+		loading:function(){
+			ctx.save();
+			this.loadingTimeId = setInterval(function(){
+				ctx.lineWidth = 5;
+				ctx.lineCap = 'round';
+				ctx.translate(230,250);
+				ctx.clearRect(-60,-60,120,120);
+				ctx.rotate(Math.PI*2/15);
+				for(var i=0;i<15;i++){
+					ctx.rotate(Math.PI*2/15);
+					ctx.strokeStyle = 'rgba('+i*7+','+i*6+','+i*14+','+i/15+')';
+					ctx.beginPath();
+					ctx.moveTo(0,40);
+					ctx.lineTo(0,60);
+					ctx.stroke();
+				}
+				ctx.translate(-230,-250);
+			},50);
+			ctx.save();
+			ctx.font = '27px impact';
+			ctx.fillStyle='rgba(45,40,50,'+0.8+')';
+			ctx.textAlign = 'left';
+			ctx.fillText('正在加载...',180,360,400);
+			ctx.restore();
+		},
+		clearLoading:function(){
+			ctx.restore();
+			clearInterval(this.loadingTimeId);
 		}
 	};
 	/*

@@ -1,12 +1,10 @@
 var canvas = null; 
 var ctx = null;
-var images = null;
 var score = 0;
 var game = {
 	init: function(){
 		canvas = document.getElementById('can');
 		ctx = canvas.getContext('2d');
-		images = {};
 	},
 	//游戏边框
 	drawLine: function (){
@@ -33,30 +31,62 @@ var game = {
 		ctx.stroke();
 		ctx.restore();
 	},
+	preLoadImg:function(images,callback){
+		var total = images.length;
+		var loaded = 0;
+		var image = new Image();
+		animation.loading();
+		setTimeout(function(){
+		for(var i=0;i<total;i++){
+			image.onload = function(){
+				if(++loaded >= total)
+					callback();
+			};
+			image.src = images[i];
+		}
+		},1000);
+	},
+	preLoadAudio:function(images,audios,callback){
+		this.preLoadImg(images,function(){
+			var total = audios.length;
+			var loaded = 0;
+			for(var audio in audios){
+				audio.addEventListener('canplaythrough',function(){
+					if(++loaded >= total){
+						callback();
+					}
+				});
+			}
+		});
+	},
 	/*
 	 *加载图片，根据数据将图片画到画布
 	 */
 	drawImg:function(){
 		var that = this;
-		images = new Image();
-		images.src = "./ddpimage/game.png";
+		var images = ['../images/game.png'];
 		gameArray.getArray();
-		images.onload = function(){
-			mouseEvent.init(canvas);
-			sprite.init(images,ctx);
-			animation.init(ctx);
+		var image = new Image();
+		image.src = images[0];
+		sprite.init(image,ctx);
+		mouseEvent.init(canvas);
+		animation.init(ctx);
+		this.preLoadImg(images,function(){
+			animation.clearLoading();
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			animation.startgame();
 			mouseEvent.addMouseEvent();
-		};
-		setTimeout(function(){
-			var stack = gameArray.dataCheck();
-			if(stack.length !== 0){
-				mouseEvent.slidedown(stack);
-			}
-		},700);
+			setTimeout(function(){
+				var stack = gameArray.dataCheck();
+				if(stack.length !== 0){
+					mouseEvent.slidedown(stack);
+				}
+			},700);
+		});
 	},
 };
-$(function(){
-	game.init();
-	game.drawLine();
-	game.drawImg();
-});
+//$(function(){
+//	game.init();
+//	game.drawLine();
+//	game.drawImg();
+//});

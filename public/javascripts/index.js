@@ -42,10 +42,8 @@ $(document).ready(function(){
 		room = from;
 		console.log('from :'+from);
 		socket.emit('say',from,{msg:'i konw game start'});
-		game.init(socket,from);
-		game.drawLine();
+		game.init();
 		game.drawImg();
-		game.addListener();
 	});
 	socket.on('online list',function(data){
 		messages += data+'\n';
