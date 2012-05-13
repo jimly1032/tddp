@@ -1,8 +1,31 @@
-h1= title
-p Welcome to #{title}
-textarea#text(width="400",height="200")
-input#msg(type='text')
-label#lab#{user}
-input#say(type='button',value='say')
-canvas#line(width="800",height="600")
-canvas#can(width="800",height="600")
+!!! 5
+html(lang='en')
+  head
+    title= title
+    script(src='/javascripts/jquery.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/javascripts/resource.js')
+    script(src='/javascripts/index.js')
+    script(src='/javascripts/gameArray.js')
+    script(src='/javascripts/sprite.js')
+    script(src='/javascripts/animation.js')
+    script(src='/javascripts/mouseEvent.js')
+    script(src='/javascripts/game.js')
+    link(rel='stylesheet', href='/stylesheets/main.css')
+  body
+    header
+      h2 DuiDuiPeng
+    aside.aside-left
+      div#person1
+    section.gameArea
+      canvas#backgroundCanvas(width="480",height="500")
+      canvas#can(width="480",height="530")
+    aside.aside-right
+      textarea#chatbox(readonly="true")
+      input#chatMsg(type="input")
+    div.progress-bar.blue.stripes
+      span#progress-span(style="width:40%")
+    div.overlay
+    div.popup
+      p#popupMsg disconnected...
+      button.close

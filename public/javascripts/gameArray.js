@@ -40,6 +40,9 @@
 					if(arr[i][j] === arr[i+1][j]){
 						stack.push({'x':i,'y':j});
 						temp += 1;
+						if(temp===2&&i===6&&j===7){
+							stack.push({'x':i+1,'y':j});
+						}
 					}else{
 						if(temp === 0){
 							continue;
@@ -49,6 +52,7 @@
 							}
 							temp = 0;
 						}else if(temp >= 2){
+							console.log(i+' '+j);
 							if(i===0){
 								stack.push({'x':7,'y':j-1});
 							}else{
@@ -63,6 +67,7 @@
 					temp = 0;
 				}
 			}
+			console.log(stack);
 			return stack;
 		},
 		/*
@@ -183,15 +188,18 @@
 				}
 			}
 			//避免过于简单,相邻过多的相同,检查行
-			for(var k =0;k<6;k++){
+			for(var k =0;k<1;k++){
 				for(i=0;i<8;i++){
 					for(j=1;j<8;j++){
+						if(arr[i][j] === arr[i][j-2]){
+							arr[i][j] -= 1;
+							if(arr[i][j] === -1)
+								arr[i][j] = Math.floor(Math.random()*7);
+						}
 						if(arr[i][j] ===arr[i][j-1]){
-								temp += 1;
-								if(temp >= 2){
-									arr[i][j-1]= Math.floor(Math.random()*7);
-									temp = 0;
-								}
+								arr[i][j] += 1;
+								if(arr[i][j] === 7)
+									arr[i][j] = Math.floor(Math.random()*7);
 							}
 						}
 					}
@@ -201,10 +209,10 @@
 					for(i=1;i<8;i++){
 						if(arr[i][j] ===arr[i-1][j]){
 								temp += 1;
-								if(temp >= 2){
-									arr[i][j]= Math.floor(Math.random()*7);
+									arr[i][j] -= 1;
+									if(arr[i][j] === -1)
+										arr[i][j] = Math.floor(Math.random()*7);
 									temp = 0;
-								}
 						}
 					}
 				}

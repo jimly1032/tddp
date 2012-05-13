@@ -16,6 +16,7 @@ var io = require('socket.io').listen(app);
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.set('view options', {layout:false});
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.session({store:sessionStore,secret:'jimly',key:'express.sid'}));
@@ -65,6 +66,9 @@ io.configure(function(){
 // Routes
 routes.chat(io);
 
+app.get('/info',function(req,res){
+	res.render('info',{title:'info'});
+});
 app.get('/login',routes.login);
 app.get('/',function(req,res){
 	routes.index(req,res);
