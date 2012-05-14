@@ -4,11 +4,10 @@
 (function(){
 	var audios = [];
 	var images = [];
-	var imageSrc = [{id:'game',src:'../images/game.png'},
-				   {id:'back',src:'../images/DistantBackground_01.jpg'}];
+	var imageSrc = [{id:'game',src:'../images/game.png'}];
 	var audioSrc = [{id:'background',src:'../music/ogg_background.wav'},
 				{id:'exchange',src:'../music/Baseball_Bat_Fall02.wav'}];
-	var ctx = null;
+	var resTotal = imageSrc.length+audioSrc.length;
 	var resource = {
 		/*
 		 *预加载图片
@@ -19,7 +18,9 @@
 			for(var i=0;i<total;i++){
 				var image = new Image();
 				image.onload = function(){
-					if(++loaded >= total){
+					loaded += 1;
+					$('#progress-span').css('width',(loaded/resTotal)*100-2+'%');
+					if(loaded >= total){
 						callback();
 					}
 				};
@@ -37,7 +38,11 @@
 				for(var i=0;i<audioSrc.length;i++){
 					var audio = document.createElement('audio');
 					audio.addEventListener('canplaythrough',function(){
-						if(++loaded >= total){
+					loaded += 1;
+					var percent = ((imageSrc.length+loaded)/resTotal)*100-2;
+					if(percent < 100)
+						$('#progress-span').css('width',percent+'%');
+						if(loaded >= total){
 							callback();
 						}
 					});

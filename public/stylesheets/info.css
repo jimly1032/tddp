@@ -4,7 +4,7 @@
 }
 body{
 	margin:0 auto;
-	font:12px/22px Helvetica,Arial,sans-serif;
+	font-family:Arial;
 	background:url('/images/bg.jpg') repeat;
 	width:800px;
 }

@@ -1,21 +1,19 @@
 var oauth = require('./login');
 var chat = require('./chat');
-var tsina = require('../lib/tsina').tapi;
 exports.index=function(req,res){
 	if(req.session.access_token){
-		res.render('index',{title:'chat',user:req.session.uid});
+		res.render('index',{title:'chat',user:req.session.user});
 	}else{
-		res.redirect('/login');
+		res.redirect('/info');
 	}
 };
 exports.invite=function(req,res,room){
 	if(req.session.access_token){
-		res.render('index',{title:'chat',user:req.session.uid});
-		console.log('after redirect many times:'+room);
+		res.render('index',{title:'chat',user:req.session.user});
 	}else{
-		res.redirect('/login?room='+room);
+		res.redirect('/info?room='+room);
 	}
 };
 exports.login = oauth.login;
 exports.logout = oauth.logout;
-exports.chat = chat.chat;
+exports.chat = chat.socketManager;

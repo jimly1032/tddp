@@ -1,13 +1,17 @@
-var canvas = null; 
-var ctx = null;
-var score = 0;
-var game = {
-	init: function(){
-		canvas = document.getElementById('can');
-		ctx = canvas.getContext('2d');
-		resource.preLoad(function(){
-//			$('div.popup').css({'visibility': 'visible','opacity':1});
-//			$('div.overlay').css({'visibility': 'visible','opacity':1});
+(function(){
+	var canvas = null; 
+	var ctx = null;
+	var score = 0;
+	var game = {
+		init: function(callback){
+			canvas = document.getElementById('can');
+			ctx = canvas.getContext('2d');
+			resource.preLoad(function(){
+				callback();
+			});
+		},
+		start:function(){
+			ctx.clearRect(0,0,canvas.width,canvas.height);
 			gameArray.getArray();
 			mouseEvent.init(canvas);
 			sprite.init(resource.getImage('game'),ctx);
@@ -20,33 +24,36 @@ var game = {
 					mouseEvent.slidedown(stack);
 				}
 			},700);
-		});
-	},
-	drawLine: function (){
-		var ctx = document.getElementById('line').getContext('2d');
-		var x = 0,y = 50,i = 0;
-		ctx.save();
-		for(i;i<9;i++){
-			ctx.moveTo(x,y);
-			x += 480;
-			ctx.lineTo(x,y);
-			x -= 480;
-			y += 60;
-		}
-		x = 0;
-		y = 50;
-		i = 0;
-		for(i;i<9;i++){
-			ctx.moveTo(x,y);
-			y += 480;
-			ctx.lineTo(x,y);
-			x += 60;
-			y -= 480;
-		}
-		ctx.stroke();
-		ctx.restore();
-	},
-};
-$(function(){
-	game.init();
-});
+		},
+		over:function(){
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			mouseEvent.MouseEvent();
+		},
+		drawLine: function (){
+			var canvas = document.getElementById('backgroundCanvas');
+			var ctx = canvas.getContext('2d');
+			var x = 0,y = 10,i = 0,j = 0;;
+			var flag = 1;
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			ctx.save();
+			for(i=0;i<8;i++){
+				for(j=0;j<8;j++){
+					if(flag===1){
+						ctx.fillStyle = 'rgba(69,79,87,0.6)';
+						ctx.fillRect(x+60*i,y+j*60,60,60);
+					}else{
+						ctx.fillStyle = 'rgba(58,68,76,0.9)';
+						ctx.fillRect(x+60*i,y+j*60,60,60);
+					}
+					if(j===7){
+						y = 10;
+					}else{
+						flag = -flag;
+					}
+				}
+			}
+			ctx.restore();
+		},
+	};
+	window.game = game;
+})();

@@ -2,6 +2,11 @@
 html(lang='en')
   head
     title= title
+    script(src='/javascripts/jquery.js')
+    script(type='text/javascript')
+      $(document).ready(function(){
+        $('a').attr('href','/login'+location.search)
+      });
     link(rel="stylesheet",style="text/css",href="/stylesheets/info.css")
   body
     header

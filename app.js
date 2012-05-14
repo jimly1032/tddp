@@ -77,7 +77,6 @@ app.get('/:uid',function(req,res){
 	var room = req.params.uid;
 	if(room === 'favicon.ico')
 		return;
-	console.log(req.params.uid);
 	routes.invite(req,res,room);
 });
 

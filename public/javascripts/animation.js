@@ -28,9 +28,16 @@
 					ctx.clearRect(now.y*60+dirx*temp,50+now.x*60+diry*temp,60,60);
 					ctx.clearRect(selected.y*60-dirx*temp,50+selected.x*60-diry*temp,60,60);
 					temp += 10;
+					ctx.save();
+					ctx.translate(30+60*now.y,80+60*now.x);
+					ctx.scale(0.8,0.8);
+					ctx.translate(-(30+60*now.y),-(80+60*now.x));
 					sprite.switchimg(55+now.x*60+diry*temp,5+60*now.y+dirx*temp,arr[selected.x][selected.y]);
+					ctx.restore();
 					sprite.switchimg(55+selected.x*60-diry*temp,5+60*selected.y-dirx*temp,arr[now.x][now.y]);
 				}else{
+					ctx.clearRect(now.y*60+dirx*temp,50+now.x*60+diry*temp,60,60);
+					sprite.switchimg(55+now.x*60+diry*temp,5+60*now.y+dirx*temp,arr[selected.x][selected.y]);
 					clearInterval(timeID);
 					mouseEvent.addMouseEvent();
 					if(typeof callback === 'function')

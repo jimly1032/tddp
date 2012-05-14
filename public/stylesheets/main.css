@@ -6,7 +6,7 @@ body{
 	margin:0 auto;
 	width:960px;
 	background:url('../images/bg.jpg') repeat;
-	font-family:"Lucida Sans Unicode","Lucida Grande",sans-serif;
+	font-family:Arial;
 }
 header{
 	position:absolute;
@@ -47,6 +47,43 @@ header h2{
 	-webkit-box-shadow:0px 0 50px #ccc;
 	-moz-box-shadow:0px 0 50px #ccc;
 	background:#eee;
+}
+#person1{
+	margin:10px 5px 40px 5px;
+	padding:5px;
+	height:200px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	box-shadow:0px 0 50px #ccc;
+	-webkit-box-shadow:0px 0 50px #ccc;
+	-moz-box-shadow:0px 0 50px #ccc;
+}
+#person2{
+	margin:5px;
+	padding:5px;
+	height:200px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	box-shadow:0px 0 50px #ccc;
+	-webkit-box-shadow:0px 0 50px #ccc;
+	-moz-box-shadow:0px 0 50px #ccc;
+}
+#person1 img,#person2 img{
+	margin-bottom:5px;
+}
+#person1 a,#person2 a{
+	display:block;
+	text-decoration:none;
+	color:#000;
+}
+#person1 a:hover,#person2 a:hover{
+	color:#777;
+}
+#person1 p,#person2 p{
+	font-family:Arial;
+	font-size:14px;
 }
 .gameArea{
 	float:left;
@@ -176,7 +213,7 @@ header h2{
 	display: inline-block;
 	left: 50%;
 	opacity: 0;
-	padding: 15px;
+	padding: 5px;
 	position:fixed;
 	text-align:justify;
 	top:40%;
@@ -206,6 +243,35 @@ header h2{
 	-ms-transition:opacity .5s,top .5s;
 	-o-transition:opacity .5s,top .5s;
 	transition:opacity .5s,top .5s;
+}
+.popup .patten p{
+	float:right;
+	margin-top:20px;
+	font-size:18px;
+}
+.popup .patten{
+	margin:5px;
+	padding:5px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	box-shadow:0px 0 50px #ccc;
+	-webkit-box-shadow:0px 0 50px #ccc;
+	-moz-box-shadow:0px 0 50px #ccc;
+}
+.popup .patten a{
+	display:block;
+	text-decoration:none;
+	color:#000;
+}
+.popup .patten a:hover{
+	color:#777;
+	background:#ccc;
+}
+.popup p#popupMsg{
+	width:250px;
+	margin:10px;
+	font-size:14px;
 }
 .close{
 	background-color: rgba(0,0,0,0.8);

@@ -4,6 +4,7 @@ html(lang='en')
     title= title
     script(src='/javascripts/jquery.js')
     script(src='/socket.io/socket.io.js')
+    script(src='/javascripts/connect.js')
     script(src='/javascripts/resource.js')
     script(src='/javascripts/index.js')
     script(src='/javascripts/gameArray.js')
@@ -14,9 +15,16 @@ html(lang='en')
     link(rel='stylesheet', href='/stylesheets/main.css')
   body
     header
-      h2 DuiDuiPeng
+      h2 在线对对碰 
     aside.aside-left
       div#person1
+        img(src=user.profile_image_url,title=user.id)
+        a(href='http://weibo.com/'+user.profile_url)
+          p #{user.name}
+      div#person2
+        img#aimPic(src='/images/notlogin.jpg')
+        a#aimUrl(href='http://weibo.com/'+user.profile_url)
+          p#aimName
     section.gameArea
       canvas#backgroundCanvas(width="480",height="500")
       canvas#can(width="480",height="530")
@@ -24,8 +32,16 @@ html(lang='en')
       textarea#chatbox(readonly="true")
       input#chatMsg(type="input")
     div.progress-bar.blue.stripes
-      span#progress-span(style="width:40%")
+      span#progress-span(style="width:0%")
     div.overlay
     div.popup
-      p#popupMsg disconnected...
+      div.patten(hidden)
+        a#random(href="#")
+          img(src="/images/random.png")
+          p 随机模式
+      div.patten(hidden)
+        a#contact(href="#")
+          img(src="/images/contact.png")
+          p 邀请好友
+      p#popupMsg 与服务器连接中...
       button.close
