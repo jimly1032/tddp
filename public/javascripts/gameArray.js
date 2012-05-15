@@ -72,6 +72,7 @@
 		},
 		/*
 		 *消除之后随机生成新的数值
+		 *@parma temp消除的对象
 		 */
 		getNewArray:function(temp){
 			for(var i=temp.x-1;i>=0;i--){
@@ -175,7 +176,7 @@
 			return temp;
 		},
 		/*
-		 * 游戏数据
+		 * 初始化游戏数据
 		 */
 		getArray:function(){
 			var count = 0;

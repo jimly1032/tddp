@@ -73,6 +73,7 @@ app.get('/login',routes.login);
 app.get('/',function(req,res){
 	routes.index(req,res);
 });
+app.get('/logout',routes.logout);
 app.get('/:uid',function(req,res){
 	var room = req.params.uid;
 	if(room === 'favicon.ico')

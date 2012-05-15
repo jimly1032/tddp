@@ -16,6 +16,21 @@ html(lang='en')
   body
     header
       h2 在线对对碰 
+      nav
+        ul
+          li
+            a(href="#")
+              div#sounddiv
+                img#sound(src='/images/sound.png',height="30px")
+          li
+            a#selectPatten(href="#")
+              选择模式
+          li
+            a(href="/info")
+              关于
+          li
+            a(href="/logout")
+              退出 
     aside.aside-left
       div#person1
         img(src=user.profile_image_url,title=user.id)

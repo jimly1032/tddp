@@ -2,6 +2,7 @@
 	var room = undefined;
 	function socketFun(){
 		var socket = io.connect('http://127.0.0.1:3000');
+//		var socket = io.connect('http://tddps.cloudfoundry.com');
 		var message = '';
 		var userName = $('aside > #person1 > a > p').text();
 		var uid = $('aside > #person1 > img').attr('title');
@@ -30,7 +31,7 @@
 				room = location.pathname.substr(1);
 				console.log(room);
 				if(room !== ''){
-					socket.emit('contact',room,room );
+					socket.emit('contact',room,room);
 				}
 			}
 			popupHidden();
@@ -71,10 +72,13 @@
 		 *
 		 */
 		$('#contact').click(function(){
+			var d = new Date();
+			var room = d.getFullYear()+''+d.getMonth()+''+d.getDate()+''+d.getHours()+''+d.getMinutes()+''+d.getSeconds()+''+d.getMilliseconds();
 			$('.patten').hide();
-			$('#popupMsg').text('请复制该网址：http://127.0.0.1:3000/'+uid+'给好友.正在等待好友进入,如果长时间没有人进来，请选择随机分配...');
+//			$('#popupMsg').text('请复制该网址：http://tddps.cloudfoundry.com/'+room+'给好友.正在等待好友进入,如果长时间没有人进来，请选择随机分配...');
+			$('#popupMsg').text('请复制该网址：http://127.0.0.1:3000/'+room+'给好友.正在等待好友进入,如果长时间没有人进来，请选择随机分配...');
 			$('#popupMsg').show();
-			socket.emit('contact',uid);
+			socket.emit('contact',room);
 		});
 		/*
 		 *重连，发送房间号到服务器，找回自己的房间所在
@@ -108,6 +112,7 @@
 		 *找到玩家，将玩家的信息显示在下方，保存房间号，开始游戏
 		 */
 		socket.on('aim',function(from,data){
+			popupHidden();
 			$('#aimPic').attr('src',data.pic);
 			$('#aimUrl').attr('href','http://weibo.com/'+data.url);
 			$('#aimName').text(data.name);
@@ -116,8 +121,27 @@
 			$('#chatbox').val(message);
 			$('#chatbox').scrollTop($('#chatbox').attr('scrollHeight'));
 			room = from;
-			popupHidden();
 			game.start();
+			game.drawBg();
+		});
+		/*
+		 *开启与关闭音乐
+		 */
+		$('#sound').click(function(){
+			if($('#sound').css('left') === '0px'){
+				$('#sound').css('left','-30px');
+				resource.mutedAll();
+			}else{
+				$('#sound').css('left','0px');
+				resource.unMutedAll();
+			}
+		});
+		/*
+		 *选择模式
+		 */
+		$('#selectPatten').click(function(){
+			popupVisible();
+			$('.patten').show();
 		});
 	}
 	/*
@@ -148,7 +172,8 @@
 				$('.progress-bar').hide('slow');
 				$('.patten').show();
 				$('#popupMsg').hide();
-				popupVisible();
+				if(room === undefined || room==='')
+					popupVisible();
 			},500);
 		});
 	}

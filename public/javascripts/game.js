@@ -29,7 +29,7 @@
 			ctx.clearRect(0,0,canvas.width,canvas.height);
 			mouseEvent.MouseEvent();
 		},
-		drawLine: function (){
+		drawBg: function (){
 			var canvas = document.getElementById('backgroundCanvas');
 			var ctx = canvas.getContext('2d');
 			var x = 0,y = 10,i = 0,j = 0;;

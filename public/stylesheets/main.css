@@ -35,6 +35,48 @@ header h2{
                0 10px 10px rgba(0,0,0,.2),
                0 20px 20px rgba(0,0,0,.15);
 }
+header nav{
+	position:absolute;
+	top:5px;
+	left:350px;
+}
+header nav ul{
+	list-style:none;
+	width:500px;
+	height:40px;
+}
+header nav li{
+	position: relative;
+	float:left;
+	margin:0 5px;
+	height:40px;
+	padding:7px 6px 0;
+	list-style:none;
+}
+header nav li a{
+	text-decoration:none;
+	line-height:33px;
+	margin-right:20px;
+	width:80px;
+	font-size:14px;
+	float:left;
+	text-align:center;
+	display:block;
+	color:#777;
+}
+header nav li a:hover{
+	color:#fff;
+}
+#sounddiv{
+	position:absolute;
+	height:30px;
+	width:30px;
+	overflow:hidden;
+}
+#sound{
+	position:absolute;
+	left:0px;
+}
 .aside-left{
 	float:left;
 	margin:70px 10px 10px 0px;

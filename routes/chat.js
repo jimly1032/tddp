@@ -1,14 +1,27 @@
+/*当前在线的人*/
 var allUsers = {};
+/*随机模式时等待的人*/
 var freeUsers = [];
+/*与好友对战保存自己的房间号，以uid为标志*/
+var temp = [];
 exports.socketManager= function(io){
 	io.sockets.on('connection',function(socket){
+		/*
+		 *经过握手之后取得session
+		 */
 		var session = socket.handshake.session;
+		/*
+		 *刷新当前在线的人
+		 */
 		var refresh_online = function(){
 			var temp = [];
 			for(var i in allUsers){
 				temp.push(i);
 			}
 		};
+		/*
+		 *检测session存在否，如果存在可能是断线的用户，重新进入房间
+		 */
 		if(session === undefined){
 			return ;
 		}else{
@@ -24,6 +37,9 @@ exports.socketManager= function(io){
 				}
 			});
 		}
+		/*
+		 *聊天处理
+		 */
 		socket.on('message',function(room,data){
 			if(data === undefined){
 				data = room;
@@ -32,6 +48,9 @@ exports.socketManager= function(io){
 				io.sockets.in(room).emit('message',user.name,data);
 			}
 		});
+		/*
+		 *断线之后刷新当前在线人数，如果用户在随机模式等待，删除之.如果正在对战，给对方提示
+		 */
 		socket.on('disconnect',function(){
 			io.sockets.in(session.room).emit('disconnected',user.name,'暂时与服务器失去连接,请等待。');
 			delete allUsers[session.uid];
@@ -40,9 +59,15 @@ exports.socketManager= function(io){
 			session = null;
 			refresh_online();
 		});
+		/*
+		 *选择随机模式，如果当前没有用户在等待，进入等待用户列表，否则选择以为用户与之对战
+		 */
 		socket.on('random',function(data){
+			if(freeUsers.indexOf(session.uid) >= 0)
+				freeUsers.splice(freeUsers.indexOf(session.uid));
 			if(freeUsers.length>=1){
-				var room =session.uid;
+				var d = new Date();
+				var room = d.getFullYear()+''+d.getMonth()+''+d.getDate()+''+d.getHours()+''+d.getMinutes()+''+d.getSeconds()+''+d.getMilliseconds();
 				var to = freeUsers.pop();
 				var target = allUsers[to];
 				socket.join(room);
@@ -56,15 +81,23 @@ exports.socketManager= function(io){
 				freeUsers.push(session.uid);
 			}
 		});
+		/*
+		 *与好友对战模式
+		 */
 		socket.on('contact',function(room,data){
 			if(data === undefined){
 				data = room;
 				socket.join(data);
+				temp.push({uid:session.uid,room:room});
 			}else{
-				if(io.rooms['/'+data] !== undefined){
-					socket.join(data);
-					if(io.rooms['/'+data].length === 2){
-						var target = allUsers[data];
+				if(io.rooms['/'+room] !== undefined){
+					socket.join(room);
+					if(io.rooms['/'+room].length === 2){
+						for(var i =0;i<temp.length;i++){
+							if(temp[i].room === room){
+								var target = allUsers[temp[i].uid];
+							}
+						}
 						target.handshake.session.room = room;
 						socket.handshake.session.room = room;
 						var targetUser = target.handshake.session.user;
