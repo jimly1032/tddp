@@ -10,6 +10,7 @@
 		dataCheck:function(){
 			var i=0,j=0,temp = 0;
 			var stack = new Array(); 
+			var len = [];
 			for(i=0;i<8;i++){
 				for(j=0;j<8;j++){
 					if(arr[i][j] === arr[i][j+1]){
@@ -24,6 +25,8 @@
 							}
 							temp = 0;
 						}else if(temp >= 2){
+							temp += 1;
+							len.push(temp);
 							stack.push({'x':i,'y':j});
 							temp = 0;
 						}
@@ -52,7 +55,8 @@
 							}
 							temp = 0;
 						}else if(temp >= 2){
-							console.log(i+' '+j);
+							temp += 1;
+							len.push(temp);
 							if(i===0){
 								stack.push({'x':7,'y':j-1});
 							}else{
@@ -67,7 +71,7 @@
 					temp = 0;
 				}
 			}
-			console.log(stack);
+			stack.push(len);
 			return stack;
 		},
 		/*
@@ -172,6 +176,9 @@
 						}
 					}
 				}
+			}
+			for(var i =0;i<temp.length;i++){
+				console.log(temp[i].x+' '+temp[i].y);
 			}
 			return temp;
 		},

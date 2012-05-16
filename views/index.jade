@@ -34,12 +34,24 @@ html(lang='en')
     aside.aside-left
       div#person1
         img(src=user.profile_image_url,title=user.id)
+        div.info
+          p 粉丝：#{user.followers_count}
+          p 关注：#{user.friends_count}
+          p 微博：#{user.statues_count||0}
         a(href='http://weibo.com/'+user.profile_url)
           p #{user.name}
+        div.score
+          p#score1 0
       div#person2
         img#aimPic(src='/images/notlogin.jpg')
+        div.info
+          p#aimFollowers 粉丝：
+          p#aimFriends 关注：
+          p#aimStatues 微博：
         a#aimUrl(href='http://weibo.com/'+user.profile_url)
-          p#aimName
+          p#aimName ?
+        div.score
+          p#score2 0
     section.gameArea
       canvas#backgroundCanvas(width="480",height="500")
       canvas#can(width="480",height="530")

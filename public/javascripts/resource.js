@@ -48,7 +48,7 @@
 					var percent = ((imageSrc.length+loaded)/resTotal)*100-2;
 					if(percent < 100)
 						$('#progress-span').css('width',percent+'%');
-						if(loaded >= total){
+						if(loaded === total){
 							callback();
 						}
 					});
@@ -88,8 +88,8 @@
 		 */
 		playAudio:function(id,loop){
 			var audio = this.getAudio(id);
-			console.log(audio.currentTime);
 			audio.currentTime = 0;
+			audio.pause();
 			if(loop !== undefined)
 				if(typeof audio.loop === 'boolean'){
 					audio.loop =loop;

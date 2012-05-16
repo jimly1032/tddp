@@ -15,6 +15,8 @@
 	var arr = gameArray.getArr();
 	var clickhandle;
 	var canvas = null;
+	var continusTime = 0;
+	var score = 0;
 	/*
 	 *通过获取鼠标的偏移位置来确定点击的图片
 	 */
@@ -33,12 +35,32 @@
 	var slidedown=function(stack){
 		var self= this;
 		var timecount = [];
+		var len = stack.pop();
+		var maxLen = 0;
+		if(len.length > 1){
+			score += len.length+1;
+		}else if(len.length === 1){
+			score += 1;
+		}
+		for(var i =0;i<len.length;i++){
+			if(len[i] > maxLen)
+				maxLen = len[i];
+		}
 		if(stack.length === 0){
+			continusTime = 0;
 			return;
+		}else{
+			continusTime += 1;
 		}
 		var temp = {};
 		removeAllListener();
-		resource.playAudio('success',false);
+		if(continusTime >= 3 || maxLen >= 4){
+			score += 1;
+			resource.playAudio('continues',false);
+		}else{
+			resource.playAudio('success',false);
+		}
+		connect.sendScore(score);
 		while(stack.length!==0){
 			temp = stack.shift();
 			var back = function(temp){
@@ -53,7 +75,11 @@
 		gameArray.getNewArray(temp);
 		animation.downeffect(timecount,temp,function(){
 			setTimeout(function(){
-				slidedown(gameArray.dataCheck());
+				if(gameArray.isOver().length === 0){
+					game.start();
+				}else{
+					slidedown(gameArray.dataCheck());
+				}
 			},100);
 		});
 	};
@@ -124,7 +150,7 @@
 					sprite.clearTimer();
 					animation.slide(selected,now,selected.y-now.y,selected.x-now.x,function(){
 						var stack = gameArray.dataCheck();
-						if(stack.length === 0){
+						if(stack.length === 1){
 							resource.playAudio('fail',false);
 							animation.slide(selected,now,selected.y-now.y,selected.x-now.x,function(){
 							});
@@ -174,8 +200,9 @@
 							sprite.clearTimer();
 							animation.slide(selected,now,selected.y-now.y,selected.x-now.x,function(){
 								var stack = gameArray.dataCheck();
-								if(stack.length === 0){
+								if(stack.length === 1){
 									animation.slide(selected,now,selected.y-now.y,selected.x-now.x,function(){
+										resource.playAudio('fail',false);
 									});
 									selected = undefined;
 								}else{

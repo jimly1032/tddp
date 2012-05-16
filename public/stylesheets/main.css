@@ -173,19 +173,58 @@ header nav li a:hover{
 	-moz-box-shadow:0px 0 50px #ccc;
 }
 #person1 img,#person2 img{
-	margin-bottom:5px;
+	margin:5px;
 }
 #person1 a,#person2 a{
 	display:block;
+	margin:5px;
 	text-decoration:none;
 	color:#000;
 }
 #person1 a:hover,#person2 a:hover{
 	color:#777;
 }
-#person1 p,#person2 p{
+#person1 a p,#person2 a p{
 	font-family:Arial;
 	font-size:14px;
+}
+.info{
+	position:relative;
+	top:5px;
+	right:10px;
+	float:right;
+	overflow:hidden;
+}
+.info p{
+	font-family:Arial;
+	font-size:12px;
+}
+.score{
+	margin:10px;
+	position:relative;
+	height:100px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	box-shadow:0px 0 50px #ccc;
+	-webkit-box-shadow:0px 0 50px #ccc;
+	-moz-box-shadow:0px 0 50px #ccc;
+}
+#score1{
+	padding:10px;
+	font-family:Arial;
+	font-weight:100;
+	font-size:70px;
+	text-decoration:none;
+	text-align:center;
+}
+#score2{
+	padding:10px;
+	font-family:Arial;
+	font-weight:100;
+	font-size:70px;
+	text-decoration:none;
+	text-align:center;
 }
 .gameArea{
 	float:left;

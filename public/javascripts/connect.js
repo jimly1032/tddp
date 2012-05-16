@@ -119,17 +119,27 @@
 			 */
 			socket.on('aim',function(from,data){
 				popupHidden();
-				$('#aimPic').attr('src',data.pic);
-				$('#aimUrl').attr('href','http://weibo.com/'+data.url);
+				data = data.user;
+				$('#aimPic').attr('src',data.profile_image_url);
+				$('#aimUrl').attr('href','http://weibo.com/'+data.profile_url);
 				$('#aimName').text(data.name);
-				$('aimPic').attr('title',data.id);
+				$('#aimPic').attr('title',data.id);
+				$('#aimFollowers').text($('#aimFollowers').text()+data.followers_count);
+				$('#aimFriends').text($('#aimFriends').text()+data.friends_count);
+				$('#aimstatues').text($('#aimStatues').text()+data.statues_count);
 				message += '与'+data.name+'进行游戏\n';
 				$('#chatbox').val(message);
 				$('#chatbox').scrollTop($('#chatbox').attr('scrollHeight'));
 				room = from;
 				game.start();
 				game.drawBg();
-				resource.playAudio('1',true);
+			});
+			socket.on('score',function(room,data){
+				if(userName === data.user){
+					$('#score1').text(data.data);
+				}else{
+					$('#score2').text(data.data);
+				}
 			});
 			/*
 			 *开启与关闭音乐
@@ -157,6 +167,7 @@
 		start:function(){
 			game.init(function(){
 				setTimeout(function(){
+					resource.playAudio('bg',true);
 					if(room === undefined || room==='')
 						popupVisible();
 					$('.progress-bar').hide('slow');

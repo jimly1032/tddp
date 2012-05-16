@@ -75,8 +75,8 @@ exports.socketManager= function(io){
 				target.handshake.session.room = room;
 				socket.handshake.session.room = room;
 				var targetUser = target.handshake.session.user;
-				socket.emit('aim',room,{name:targetUser.name,pic:targetUser.profile_image_url,url:targetUser.profile_url});
-				target.emit('aim',room,{name:user.name,pic:user.profile_image_url,url:user.profile_url});
+				socket.emit('aim',room,{user:targetUser});
+				target.emit('aim',room,{user:user});
 			}else{
 				freeUsers.push(session.uid);
 			}
@@ -101,12 +101,18 @@ exports.socketManager= function(io){
 						target.handshake.session.room = room;
 						socket.handshake.session.room = room;
 						var targetUser = target.handshake.session.user;
-						socket.emit('aim',room,{name:targetUser.name,pic:targetUser.profile_image_url,url:targetUser.profile_url});
-						target.emit('aim',room,{name:user.name,pic:user.profile_image_url,url:user.profile_url});
+						socket.emit('aim',room,{user:targetUser});
+						target.emit('aim',room,{user:user});
 					}
 				}else
 					console.log('当前房间不存在');
 			}
+		});
+		socket.on('score',function(room,data){
+			var d = {};
+			d.user = session.user.name;
+			d.data = data;
+			io.sockets.in(room).emit('score',room,d);
 		});
 	});
 };
