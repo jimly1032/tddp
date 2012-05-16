@@ -38,6 +38,7 @@
 		}
 		var temp = {};
 		removeAllListener();
+		resource.playAudio('success',false);
 		while(stack.length!==0){
 			temp = stack.shift();
 			var back = function(temp){
@@ -124,6 +125,7 @@
 					animation.slide(selected,now,selected.y-now.y,selected.x-now.x,function(){
 						var stack = gameArray.dataCheck();
 						if(stack.length === 0){
+							resource.playAudio('fail',false);
 							animation.slide(selected,now,selected.y-now.y,selected.x-now.x,function(){
 							});
 							selected = undefined;

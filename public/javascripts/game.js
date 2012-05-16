@@ -1,7 +1,6 @@
 (function(){
 	var canvas = null; 
 	var ctx = null;
-	var score = 0;
 	var game = {
 		init: function(callback){
 			canvas = document.getElementById('can');

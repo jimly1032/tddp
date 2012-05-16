@@ -66,6 +66,11 @@ header nav li a{
 }
 header nav li a:hover{
 	color:#fff;
+	-webkit-transform:scale(1.2);
+	-ms-transform:scale(1.2);
+	-moz-transform:scale(1.2);
+	-o-transform:scale(1.2);
+	transform:scale(1.2);
 }
 #sounddiv{
 	position:absolute;
@@ -89,6 +94,61 @@ header nav li a:hover{
 	-webkit-box-shadow:0px 0 50px #ccc;
 	-moz-box-shadow:0px 0 50px #ccc;
 	background:#eee;
+	-webkit-animation-name:aside-left-down;
+	-webkit-animation-duration:2s;
+	-webkit-timing-function:ease-in;
+	-moz-animation-name:aside-left-down;
+	-moz-animation-duration:2s;
+	-moz-timing-function:ease-in;
+	-ms-animation-name:aside-left-down;
+	-ms-animation-duration:2s;
+	-ms-timing-function:ease-in;
+	-o-animation-name:aside-left-down;
+	-o-animation-duration:2s;
+	-o-timing-function:ease-in;
+	animation-name:aside-left-down;
+	animation-duration:2s;
+	timing-function:ease-in;
+}
+@-webkit-keyframes aside-left-down{
+	0% {margin-top:-210px;}
+	20% {margin-top:-170px;}
+	40% {margin-top:-110px;}
+	60% {margin-top:-50px;}
+	80% {margin-top:10px;}
+	100% {margin-top:70px;}
+}
+@-moz-keyframes aside-left-down{
+	0% {margin-top:-210px;}
+	20% {margin-top:-170px;}
+	40% {margin-top:-110px;}
+	60% {margin-top:-50px;}
+	80% {margin-top:10px;}
+	100% {margin-top:70px;}
+}
+@-ms-keyframes aside-left-down{
+	0% {margin-top:-210px;}
+	20% {margin-top:-170px;}
+	40% {margin-top:-110px;}
+	60% {margin-top:-50px;}
+	80% {margin-top:10px;}
+	100% {margin-top:70px;}
+}
+@-o-keyframes aside-left-down{
+	0% {margin-top:-210px;}
+	20% {margin-top:-170px;}
+	40% {margin-top:-110px;}
+	60% {margin-top:-50px;}
+	80% {margin-top:10px;}
+	100% {margin-top:70px;}
+}
+@keyframes aside-left-down{
+	0% {margin-top:-210px;}
+	20% {margin-top:-170px;}
+	40% {margin-top:-110px;}
+	60% {margin-top:-50px;}
+	80% {margin-top:10px;}
+	100% {margin-top:70px;}
 }
 #person1{
 	margin:10px 5px 40px 5px;
@@ -178,6 +238,21 @@ header nav li a:hover{
 	-webkit-box-shadow:0px 0 50px #ccc;
 	-moz-box-shadow:0px 0 50px #ccc;
 	background:#f8f8f8;
+	-webkit-animation-name:aside-left-down;
+	-webkit-animation-duration:2s;
+	-webkit-timing-function:ease-in;
+	-moz-animation-name:aside-left-down;
+	-moz-animation-duration:2s;
+	-moz-timing-function:ease-in;
+	-ms-animation-name:aside-left-down;
+	-ms-animation-duration:2s;
+	-ms-timing-function:ease-in;
+	-o-animation-name:aside-left-down;
+	-o-animation-duration:2s;
+	-o-timing-function:ease-in;
+	animation-name:aside-left-down;
+	animation-duration:2s;
+	timing-function:ease-in;
 }
 #chatbox{
 	width:85%;

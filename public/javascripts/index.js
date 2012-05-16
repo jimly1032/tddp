@@ -1,6 +1,5 @@
 $(document).ready(function(){
-	start();
-	socketFun();
+	connect.start();
 //	var socket = io.connect('http://tddps.cloudfoundry.com');
 //	socket.on('connect',function(){
 //		if(room === undefined){

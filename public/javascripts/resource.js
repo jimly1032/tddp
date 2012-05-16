@@ -5,8 +5,14 @@
 	var audios = [];
 	var images = [];
 	var imageSrc = [{id:'game',src:'../images/game.png'}];
-	var audioSrc = [{id:'background',src:'../music/ogg_background.wav'},
-				{id:'exchange',src:'../music/Baseball_Bat_Fall02.wav'}];
+	var audioSrc = [{id:'bg',src:'../music/bg.wav'},
+				{id:'continues',src:'../music/continues.wav'},
+				{id:'3',src:'/music/3.wav'},
+				{id:'2',src:'/music/2.wav'},
+				{id:'1',src:'/music/1.wav'},
+				{id:'fail',src:'/music/fail.wav'},
+				{id:'success',src:'/music/success.wav'},
+				{id:'winer',src:'/music/winer.wav'} ];
 	var resTotal = imageSrc.length+audioSrc.length;
 	var resource = {
 		/*
@@ -82,7 +88,17 @@
 		 */
 		playAudio:function(id,loop){
 			var audio = this.getAudio(id);
-			audio.loop = loop;
+			console.log(audio.currentTime);
+			audio.currentTime = 0;
+			if(loop !== undefined)
+				if(typeof audio.loop === 'boolean'){
+					audio.loop =loop;
+				}else{
+					audio.addEventListener('ended',function(){
+						this.currentTime = 0;
+						this.play();
+					});
+				}
 			audio.play();
 		},
 		/*
