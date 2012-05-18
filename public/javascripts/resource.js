@@ -43,15 +43,16 @@
 				var loaded = 0;
 				for(var i=0;i<audioSrc.length;i++){
 					var audio = document.createElement('audio');
-					audio.addEventListener('canplaythrough',function(){
-					loaded += 1;
-					var percent = ((imageSrc.length+loaded)/resTotal)*100-2;
-					if(percent < 100)
-						$('#progress-span').css('width',percent+'%');
-						if(loaded === total){
-							callback();
+					audio.oncanplaythrough = function(){
+						loaded += 1;
+						var percent = ((imageSrc.length+loaded)/resTotal)*100-2;
+						if(percent < 100){
+							$('#progress-span').css('width',percent+'%');
+							if(loaded === total){
+								callback();
+							}
 						}
-					});
+					}();
 					audio.src = audioSrc[i].src;
 					audios.push({id:audioSrc[i].id,audio:audio});
 				}

@@ -81,7 +81,7 @@
 				var d = new Date();
 				var room = d.getFullYear()+''+d.getMonth()+''+d.getDate()+''+d.getHours()+''+d.getMinutes()+''+d.getSeconds()+''+d.getMilliseconds();
 				$('.patten').hide();
-	//			$('#popupMsg').text('请复制该网址：http://tddps.cloudfoundry.com/'+room+'给好友.正在等待好友进入,如果长时间没有人进来，请选择随机分配...');
+//				$('#popupMsg').text('请复制该网址：http://tddps.cloudfoundry.com/'+room+'给好友.正在等待好友进入,如果长时间没有人进来，请选择随机分配...');
 				$('#popupMsg').text('请复制该网址：http://127.0.0.1:3000/'+room+'给好友.正在等待好友进入,如果长时间没有人进来，请选择随机分配...');
 				$('#popupMsg').show();
 				socket.emit('contact',room);
