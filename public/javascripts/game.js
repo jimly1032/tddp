@@ -12,20 +12,30 @@
 			});
 		},
 		start:function(){
-			ctx.clearRect(0,0,canvas.width,canvas.height);
-			gameArray.getArray();
-			mouseEvent.init(canvas);
-			sprite.init(resource.getImage('game'),ctx);
-			animation.init(ctx);
-			animation.startgame();
-			this.drawBg();
-			mouseEvent.addMouseEvent();
-			setTimeout(function(){
-				var stack = gameArray.dataCheck();
-				if(stack.length !== 0){
-					mouseEvent.slidedown(stack);
+			var self = this;
+			var count = 3;
+			var id = setInterval(function(){
+				if(count > 0){
+					resource.playAudio(''+count);
+					count -= 1;
+				} else{
+					clearInterval(id);
+					ctx.clearRect(0,0,canvas.width,canvas.height);
+					gameArray.getArray();
+					mouseEvent.init(canvas);
+					sprite.init(resource.getImage('game'),ctx);
+					animation.init(ctx);
+					animation.startgame();
+					self.drawBg();
+					mouseEvent.addMouseEvent();
+					setTimeout(function(){
+						var stack = gameArray.dataCheck();
+						if(stack.length !== 0){
+							mouseEvent.slidedown(stack);
+						}
+					},700);
 				}
-			},700);
+			},1000);
 		},
 		over:function(){
 			ctx.clearRect(0,0,canvas.width,canvas.height);
