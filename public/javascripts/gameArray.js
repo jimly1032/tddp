@@ -224,6 +224,9 @@
 						}
 					}
 				}
+			if(this.isOver().length === 0){
+				this.getArray();
+			}
 		}
 	};
 	window.gameArray = gameArray;

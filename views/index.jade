@@ -37,7 +37,7 @@ html(lang='en')
         div.info
           p 粉丝：#{user.followers_count}
           p 关注：#{user.friends_count}
-          p 微博：#{user.statues_count||0}
+          p 微博：#{user.statuses_count||0}
         a(href='http://weibo.com/'+user.profile_url)
           p #{user.name}
         div.score
@@ -47,7 +47,7 @@ html(lang='en')
         div.info
           p#aimFollowers 粉丝：
           p#aimFriends 关注：
-          p#aimStatues 微博：
+          p#aimStatuses 微博：
         a#aimUrl(href='http://weibo.com/'+user.profile_url)
           p#aimName ?
         div.score
@@ -70,5 +70,8 @@ html(lang='en')
         a#contact(href="#")
           img(src="/images/contact.png")
           p 邀请好友
+      div.playagain(hidden)
+        a#again(href="#")
+          p 再玩一局吧
       p#popupMsg 与服务器连接中...
       button.close

@@ -4,6 +4,7 @@ var allUsers = {};
 var freeUsers = [];
 /*与好友对战保存自己的房间号，以uid为标志*/
 var temp = [];
+var again = {};
 exports.socketManager= function(io){
 	io.sockets.on('connection',function(socket){
 		/*
@@ -106,6 +107,23 @@ exports.socketManager= function(io){
 					}
 				}else
 					console.log('当前房间不存在');
+			}
+		});
+		socket.on('playagain',function(room,d){
+			if(again[''+room] === undefined){
+				again[''+room] = 1;
+			}else{
+				again[''+room] += 1;
+			}
+			console.log(again[''+room]);
+			if(again[''+room] === 2){
+				var data = {};
+				data.msg = d;
+				data.start = true;
+				again[''+room] = undefined;
+				io.sockets.in(room).emit('playagain',room,data);
+			}else{
+				io.sockets.in(room).emit('playagain',room,d);
 			}
 		});
 		socket.on('score',function(room,data){

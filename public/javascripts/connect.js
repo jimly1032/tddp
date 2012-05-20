@@ -1,6 +1,7 @@
 (function(){
 	var room = undefined;
 	var socket = undefined ;
+	var message = '';
 	var connect = {
 		sendScore:function(data){
 			if(socket !== undefined){
@@ -10,7 +11,6 @@
 		socketFun:function(){
 			socket = io.connect('http://127.0.0.1:3000');
 //			socket = io.connect('http://tddps.cloudfoundry.com');
-			var message = '';
 			var userName = $('aside > #person1 > a > p').text();
 			var uid = $('aside > #person1 > img').attr('title');
 			/*
@@ -31,9 +31,8 @@
 				});
 			});
 			socket.on('connect',function(){
-				message += userName+'进入游戏\n';
-				$('#chatbox').val(message);
-				$('#chatbox').scrollTop($('#chatbox').attr('scrollHeight'));
+				var msg = userName+'进入游戏\n';
+				showMessage(msg);
 				if(room === undefined){
 					room = location.pathname.substr(1);
 					console.log(room);
@@ -46,9 +45,8 @@
 			 *由于网络原因等，与服务器断开连接，文本框显示提示，同时遮盖整个页面，给予提示，停止玩家进行游戏。
 			 */
 			socket.on('disconnect',function(){
-				message += '与服务器断开连接\n';
-				$('#chatbox').val(message);
-				$('#chatbox').scrollTop($('#chatbox').attr('scrollHeight'));
+				var msg = '与服务器断开连接\n';
+				showMessage(msg);
 				popupVisible();
 				$('.patten').hide();
 				$('#popupMsg').text('与服务器断开连接...');
@@ -58,9 +56,8 @@
 			 *聊天信息显示在文本框，同时将文本框自动拉到最后
 			 */
 			socket.on('message',function(from,data){
-				message += from+': '+data+'\n';
-				$('#chatbox').val(message);
-				$('#chatbox').scrollTop($('#chatbox').attr('scrollHeight'));
+				var msg = from+': '+data+'\n';
+				showMessage(msg);
 			});
 
 			/*
@@ -69,6 +66,7 @@
 			 */
 			$('#random').click(function(){
 				$('.patten').hide();
+				$('.playagain').hide();
 				$('#popupMsg').text('正在随机分配,如果长时间没有人进来，请选择邀请好友...');
 				$('#popupMsg').show();
 				socket.emit('random','random');
@@ -101,9 +99,8 @@
 			 */
 			socket.on('reconnect_success',function(room,data){
 				popupHidden();
-				message += data+'\n';
-				$('#chatbox').val(message);
-				$('#chatbox').scrollTop($('#chatbox').attr('scrollHeight'));
+				var msg = data+'\n';
+				showMessage(msg);
 			});
 			/*
 			 *对方玩家与服务器失去连接，遮盖页面
@@ -124,21 +121,58 @@
 				$('#aimUrl').attr('href','http://weibo.com/'+data.profile_url);
 				$('#aimName').text(data.name);
 				$('#aimPic').attr('title',data.id);
-				$('#aimFollowers').text($('#aimFollowers').text()+data.followers_count);
-				$('#aimFriends').text($('#aimFriends').text()+data.friends_count);
-				$('#aimstatues').text($('#aimStatues').text()+data.statues_count);
-				message += '与'+data.name+'进行游戏\n';
-				$('#chatbox').val(message);
-				$('#chatbox').scrollTop($('#chatbox').attr('scrollHeight'));
+				$('#aimFollowers').text($('#aimFollowers').text().substr(0,3)+data.followers_count);
+				$('#aimFriends').text($('#aimFriends').text().substr(0,3)+data.friends_count);
+				$('#aimStatuses').text($('#aimStatuses').text().substr(0,3)+data.statuses_count);
+				var msg = '与'+data.name+'进行游戏\n';
+				showMessage(msg);
 				room = from;
 				game.start();
-				game.drawBg();
+				message = '';
+				mouseEvent.setScore(0);
 			});
+			/*
+			 *接收分数数据，显示分数
+			 */
 			socket.on('score',function(room,data){
 				if(userName === data.user){
 					$('#score1').text(data.data);
+					if(data.data >= 100){
+						resource.playAudio('winer');
+						game.over();
+						popupVisible();
+						$('.patten').show();
+						$('.playagain').show();
+					}
 				}else{
 					$('#score2').text(data.data);
+					if(data.data >= 100){
+						game.over();
+						popupVisible();
+						$('.patten').show();
+						$('.playagain').show();
+					}
+				}
+			});
+			/*
+			 *再玩一次
+			 */
+			$('#again').click(function(){
+				socket.emit('playagain',room,userName+'已准备');
+				popupHidden();
+			});
+			/*
+			 *两个人都选择再玩一次，开始游戏
+			 */
+			socket.on('playagain',function(room,data){
+				if(data.start !== undefined){
+					var msg = data.msg+'\n';
+					showMessage(msg);
+					mouseEvent.setScore(0);
+					game.start();
+				}else{
+					var msg = data+'\n';
+					showMessage(msg);
 				}
 			});
 			/*
@@ -184,9 +218,17 @@
 	function popupVisible(){
 		$('.popup').css({'visibility': 'visible','opacity':1});
 		$('.overlay').css({'visibility': 'visible','opacity':1});
+		$('.playagain').hide();
 		$('.close').click(function(){
 			popupHidden();
 		});
+	}
+	function showMessage(mes){
+		var d = new Date();
+		message += '------'+d.toLocaleTimeString()+'-----\n';
+		message += mes;
+		$('#chatbox').val(message);
+		$('#chatbox').scrollTop($('#chatbox').attr('scrollHeight'));
 	}
 	/*
 	 *隐藏遮盖层

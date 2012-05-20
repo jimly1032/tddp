@@ -17,6 +17,10 @@
 	var canvas = null;
 	var continusTime = 0;
 	var score = 0;
+	var setScore = function(sc){
+		connect.sendScore(sc);
+		score = sc;
+	};
 	/*
 	 *通过获取鼠标的偏移位置来确定点击的图片
 	 */
@@ -38,9 +42,9 @@
 		var len = stack.pop();
 		var maxLen = 0;
 		if(len.length > 1){
-			score += len.length+1;
+			score += len.length+2;
 		}else if(len.length === 1){
-			score += 1;
+			score += 10;
 		}
 		for(var i =0;i<len.length;i++){
 			if(len[i] > maxLen)
@@ -55,7 +59,7 @@
 		var temp = {};
 		removeAllListener();
 		if(continusTime >= 3 || maxLen >= 4){
-			score += 1;
+			score += 2;
 			resource.playAudio('continues',false);
 		}else{
 			resource.playAudio('success',false);
@@ -71,6 +75,9 @@
 		}
 	};
 	var downcallback=function(timecount,temp){
+		if(score >= 100){
+			return ;
+		}
 		var self = this; 
 		gameArray.getNewArray(temp);
 		animation.downeffect(timecount,temp,function(){
@@ -231,7 +238,8 @@
 		},
 		addMouseEvent:addAllListener,
 		removeMouseEvent:removeAllListener,
-		slidedown:slidedown
+		slidedown:slidedown,
+		setScore:setScore
 	};
 	window.mouseEvent = mouseEvent;
 })();

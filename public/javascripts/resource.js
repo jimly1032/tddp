@@ -89,8 +89,10 @@
 		 */
 		playAudio:function(id,loop){
 			var audio = this.getAudio(id);
-			audio.currentTime = 0;
-			audio.pause();
+			if(audio.played){
+				audio.currentTime = 0;
+				audio.pause();
+			}
 			if(loop !== undefined)
 				if(typeof audio.loop === 'boolean'){
 					audio.loop =loop;
